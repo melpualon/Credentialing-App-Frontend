@@ -1,0 +1,7 @@
+{
+    "certificates": [
+        { "name": "Mel John Davis", "course": "Engineering" },
+        { "name": "Sarah Poe", "course": "Administration" },
+        { "name": "Grace Kent", "course": "Accountancy" }
+    ]
+}
