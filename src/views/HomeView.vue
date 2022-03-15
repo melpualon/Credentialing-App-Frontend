@@ -4,7 +4,6 @@
       <div class="flex justify-between py-2 mt-10 border-b border-gray-500">
         <h1 class="text-2xl font-bold text-gray-800 mb-6">Credentialing App API</h1>
         <div class="flex">
-          <button @click="editCertificate" class=" bg-green-500 btn-main mr-5">Edit Certificate</button>
           <button @click="addCertificate" class=" bg-blue-500 btn-main">Add Certificate</button>
         </div>
       </div>
@@ -23,12 +22,14 @@
           <th class="py-4">Name</th>
           <th class="py-4">Course</th>
           <th class="py-4"></th>
+          <th class="py-4"></th>
         </tr>
         <tr class="bg-white even:bg-gray-400" v-for="certificate in certificates" :key="certificate.id">
           <td class="py-3 font-bold">{{ certificate.certName }}</td>
           <td class="py-3">{{ certificate.owner }}</td>
           <td class="py-3">{{ certificate.course }}</td>
-          <td class="py-3"><a href="#!" class="font-bold text-red-600" @click="deleteCertificate(certificate.id)">Delete</a></td>
+          <td class="py-3"><button @click="editCertificate(certificate.id)" class="font-bold text-green-600">Edit</button></td>
+          <td class="py-3"><button class="font-bold text-red-600" @click="deleteCertificate(certificate.id)">Delete</button></td>
         </tr>
       </table>
     </div>
@@ -47,10 +48,11 @@ export default {
     }
   },
   mounted() {
-    fetch('http://localhost:3000/certificates')
-    .then(res => res.json())
-    .then(data => this.certificates = data)
-    .catch(err => console.log(err.message))
+    // fetch('http://localhost:3000/certificates')
+    // .then(res => res.json())
+    // .then(data => this.certificates = data)
+    // .catch(err => console.log(err.message))
+    this.fetchCertificatesApi()
   },
   methods: {
     deleteCertificate(id) {
@@ -77,6 +79,13 @@ export default {
     },
     editCertificate() {
       console.log('ceritifcate is edited')
+    },
+
+    async fetchCertificatesApi() {
+      const res = await fetch('http://localhost:3000/certificates')
+      const data = await res.json()
+      
+      this.certificates = data
     }
   }
 }
