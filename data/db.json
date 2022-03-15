@@ -1,7 +1,9 @@
 {
     "certificates": [
-        { "name": "Mel John Davis", "course": "Engineering" },
-        { "name": "Sarah Poe", "course": "Administration" },
-        { "name": "Grace Kent", "course": "Accountancy" }
+        { "certName": "Engineering 101", "owner": "Mel John Davis", "course": "Engineering" },
+        { "certName": "Admin Presscon", "owner": "Sarah Poe", "course": "Administration" },
+        { "certName": "Building Accountancy", "owner": "Grace Kent", "course": "Accountancy" },
+        { "certName": "Ethical Hacking", "owner": "Tom Garcia", "course": "Business Administration" },
+        { "certName": "Power of Appearance", "owner": "Grace Kent", "course": "Education" }
     ]
 }

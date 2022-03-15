@@ -1,0 +1,17 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.container {
+    @apply w-4/5 mx-auto max-w-7xl
+}
+
+.input-main {
+    @apply h-8 mb-4 px-3 py-5 rounded shadow
+}
+
+.btn-main {
+    @apply py-2 px-6 rounded text-white cursor-pointer block mb-4
+}

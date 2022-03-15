@@ -1,0 +1,8 @@
+
+#table tr:nth-child(even) {
+    background: #ececec;
+}
+
+.text-orange {
+    color: rgb(255, 135, 22);
+}

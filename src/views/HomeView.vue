@@ -1,51 +1,82 @@
 <template>
-  <div class="home">
-    <h1>Credentialing App API</h1>
-    <div>
-      <input type="text" v-model="name">
-      <input type="text" v-model="course">
-      <button @click="addCertificate">Add Certificate</button>
+  <div class="home pt-20">
+    <div class="container">
+      <div class="flex justify-between py-2 mt-10 border-b border-gray-500">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Credentialing App API</h1>
+        <div class="flex">
+          <button @click="editCertificate" class=" bg-green-500 btn-main mr-5">Edit Certificate</button>
+          <button @click="addCertificate" class=" bg-blue-500 btn-main">Add Certificate</button>
+        </div>
+      </div>
+
+      <div class="flex items-center mt-5 mb-10">
+        <input type="text" v-model="certName" class="input-main mr-4" placeholder="Certificate Name">
+        <input type="text" v-model="owner" class="input-main mr-4" placeholder="Name of Owner">
+        <input type="text" v-model="course" class="input-main" placeholder="Course">
+      </div>
     </div>
 
-    <div v-for="certificate in certificates" :key="certificate.id">
-      <h2>Name: {{ certificate.name }}</h2>
-      <p>Course: {{ certificate.course }}</p>
-      <button @click="deleteCertificate(certificate.id)">Delete Certificate</button>
+    <div class="container mt-16">
+      <table id="table"  class="w-full">
+        <tr class="text-left border-b border-gray-300 !bg-white">
+          <th class="py-4">Certificate</th>
+          <th class="py-4">Name</th>
+          <th class="py-4">Course</th>
+          <th class="py-4"></th>
+        </tr>
+        <tr class="bg-white even:bg-gray-400" v-for="certificate in certificates" :key="certificate.id">
+          <td class="py-3 font-bold">{{ certificate.certName }}</td>
+          <td class="py-3">{{ certificate.owner }}</td>
+          <td class="py-3">{{ certificate.course }}</td>
+          <td class="py-3"><a href="#!" class="font-bold text-red-600" @click="deleteCertificate(certificate.id)">Delete</a></td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
-
-
 export default {
   components: {},
   data() {
     return {
-      name: '',
+      certName: '',
+      owner: '',
       course: '',
-      certificates: [
-        { name: 'Mel Doe', course: 'Engineering', id: 1 },
-        { name: 'Jane Fox', course: 'Accountancy', id: 2 },
-        { name: 'Chris Don', course: 'Civil Engineer', id: 3 },
-      ]
+      certificates: []
     }
+  },
+  mounted() {
+    fetch('http://localhost:3000/certificates')
+    .then(res => res.json())
+    .then(data => this.certificates = data)
+    .catch(err => console.log(err.message))
   },
   methods: {
     deleteCertificate(id) {
       this.certificates = this.certificates.filter(item => item.id !== id)
     },
     addCertificate() {
-      if(!this.name || !this.course) {
-        console.log('Please fill in all fields')
+      const { certName , owner, course } = this
+
+      if(!certName || !owner || !course) {
+        alert('Please fill in all fields')
         return
       }
 
       this.certificates.push({
-        name: this.name,
-        course: this.course,
+        certName: certName,
+        owner: owner,
+        course: course,
         id: this.certificates.length + 1
       })
+
+      this.certName = ''
+      this.owner = '',
+      this.course = ''
+    },
+    editCertificate() {
+      console.log('ceritifcate is edited')
     }
   }
 }
