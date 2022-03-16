@@ -104,7 +104,6 @@ export default {
 
       // this.certificates = [...this.certificates, this.updatedCert]
 
-      this.certName = '',
       this.owner = '',
       this.course = ''
 
@@ -117,8 +116,6 @@ export default {
 
       const data = await res.json()
       this.certificates = data.data
-
-      // console.log(data.data)
     }
   }
 }
