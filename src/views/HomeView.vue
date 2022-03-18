@@ -4,13 +4,14 @@
       <div class="flex justify-between py-2 mt-10 border-b border-gray-500">
         <h1 class="text-2xl font-bold text-gray-800 mb-6">Credentialing App API</h1>
         <div class="flex">
-          <button @click="updateCertificate" class="btn-main bg-green-500 mr-5">Update Certificate</button>
+          <button @click="updateCertificate()" class="btn-main bg-green-500 mr-5">Update Certificate</button>
           <button @click="addCertificate" class=" bg-blue-500 btn-main">Add Certificate</button>
         </div>
       </div>
 
       <div class="flex items-center mt-5 mb-10">
         <!-- <input type="text" v-model="id" class="input-main mr-4" placeholder="Certificate Name"> -->
+        <input type="text" v-model="certificate" class="input-main mr-4" placeholder="Certificate">
         <input type="text" v-model="name" class="input-main mr-4" placeholder="Name of Owner">
         <input type="text" v-model="course" class="input-main" placeholder="Course">
       </div>
@@ -25,8 +26,8 @@
           <th class="py-4"></th>
           <th class="py-4"></th>
         </tr>
-        <tr class="bg-white even:bg-gray-400" v-for="certificate in certificates" :key="certificate.id" :cert-id="certificate.id">
-          <td class="py-3 font-bold">{{ certificate.id }}</td>
+        <tr class="bg-white even:bg-gray-400" v-for="certificate in certificates" :key="certificate.id">
+          <td class="py-3 font-bold">{{ certificate.certificate }}</td>
           <td class="py-3">{{ certificate.name }}</td>
           <td class="py-3">{{ certificate.course }}</td>
           <td class="py-3">
@@ -43,21 +44,18 @@
 import axios from 'axios';
 export default {
   components: {},
-  props: [ 'cert-id', 'key' ],
   data() {
     return {
-      id: '',
+      certificate: '',
       name: '',
       course: '',
       updatedCert: null,
-      newCertificate: null,
       certificates: []
     }
   },
   mounted() {
-    this.fetchCertificatesApi()
-
     const axios = require('axios').default;
+    this.fetchCertificatesApi()
   },
   methods: {
     addCertificate() {
@@ -65,55 +63,91 @@ export default {
         alert('Please fill in all fields')
         return
       }
-      this.newCertificate = {
-        id: this.certificates.length + 1, 
-        name: this.name,
-        course: this.course
-      }
+      // const newCertificate = {
+      //   id: this.certificates.length + 1,
+      //   name: this.name,
+      //   course: this.course,
+      //   certificate: this.certificate,
+      // }
 
-      axios.post('https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates', this.newCertificate)
-      this.certificates = [...this.certificates, this.newCertificate]
+      // console.log(newCertificate)
+      axios({
+        method: 'post',
+        url: 'https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates',
+        origin: 'https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates',
+        withCredentials: true,
+        data: {
+          id: this.certificates.length + 1,
+          name: this.name,
+          course: this.course,
+          certificate: this.certificate
+        }
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+
+
+      
+      // axios.post('https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates', newCertificate)
+      // .then(res => res.header("Access-Control-Allow-Origin", "*"))
+      // .catch(err => console.log(err))
+      // this.certificates = [...this.certificates, this.newCertificate]
       
       this.name = '',
       this.course = ''
     },
     deleteCertificate(id) {
-      this.certificates = this.certificates.filter(item => item.id !== id)
+      // this.certificates = this.certificates.filter(item => item.id !== id)
+
+      axios.delete(`https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates/${id}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
     },
     editCertificate(id) {
-      console.log(id)
+      // console.log(id)
       const filtered = this.certificates.filter(item => item.id === id)
-
-      // console.log(filtered[0].certName)
-      this.certName = filtered[0].certName
-      this.owner = filtered[0].owner
+      this.certificate = filtered[0].certificate
+      this.name = filtered[0].name
       this.course = filtered[0].course
 
-
+      // console.log(filtered[0])
     },
 
     updateCertificate() {
       this.updatedCert = {
-        certName: this.certName,
-        owner: this.owner,
+        certificate: this.certificate,
+        name: this.name,
         course: this.course,
+        isEditing: false
       }
 
-      const getId = this['cert-id']
-      console.log(getId)
+      console.log(this.updatedCert)
+      // this.certificates[0]
 
+      // this.certificates[0] = this.updatedCert
+
+      // this.certificates.find(item => {
+      //   item.isEditing === true
+      // })
+
+      // const findCert = this.certificates.indexOf(this.certificates.find(item => item.isEditing === true))
+      // console.log(findCert)
+      // this.certificates.splice(findCert, 1, this.updatedCert)
+     
+    
+
+      // console.log(findCert)
       // this.certificates = [...this.certificates, this.updatedCert]
 
-      this.owner = '',
+      this.certificate = ''
+      this.name = ''
       this.course = ''
-
-      console.log(this.updatedCert)
+      this.isEditing = false
     },
 
     async fetchCertificatesApi() {
       const res = await fetch('https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates')
       // const res = await fetch('http://localhost:3000/certificates')
-
       const data = await res.json()
       this.certificates = data.data
     }

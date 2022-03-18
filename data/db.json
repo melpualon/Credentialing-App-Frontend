@@ -1,33 +1,38 @@
 {
   "certificates": [
     {
-      "certName": "Engineering 101",
-      "owner": "Mel John Davis",
+      "certificate": "Engineering 101",
+      "name": "Mel John Davis",
       "course": "Engineering",
+      "isEditing": false, 
       "id": 1
     },
     {
-      "certName": "Admin Presscon",
-      "owner": "Sarah Poe",
+      "certificate": "Admin Presscon",
+      "name": "Sarah Poe",
       "course": "Administration",
+      "isEditing": false, 
       "id": 2
     },
     {
-      "certName": "Building Accountancy",
-      "owner": "Grace Kent",
+      "certificate": "Building Accountancy",
+      "name": "Grace Kent",
       "course": "Accountancy",
+      "isEditing": false, 
       "id": 3
     },
     {
-      "certName": "Ethical Hacking",
-      "owner": "Tom Garcia",
+      "certificate": "Ethical Hacking",
+      "name": "Tom Garcia",
       "course": "Business Administration",
+      "isEditing": false, 
       "id": 4
     },
     {
-      "certName": "Power of Appearance",
-      "owner": "Grace Kent",
+      "certificate": "Power of Appearance",
+      "name": "Grace Kent",
       "course": "Education",
+      "isEditing": false, 
       "id": 5
     }
   ]
