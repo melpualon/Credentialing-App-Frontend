@@ -8,6 +8,8 @@
             <div class="flex items-center">
                 <span class="font-bold text-gray-900">Welcome Admin John Doe</span>
                 <img src="../assets/img/img-user.jpg" class="h-7 w-7 rounded-full ml-5">
+
+                <router-link to="/about" class="font-bold ml-5">About</router-link>
             </div>
         </div>
     </nav>

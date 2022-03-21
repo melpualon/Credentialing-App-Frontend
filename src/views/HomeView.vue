@@ -146,10 +146,19 @@ export default {
     },
 
     async fetchCertificatesApi() {
-      const res = await fetch('https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates')
-      // const res = await fetch('http://localhost:3000/certificates')
-      const data = await res.json()
-      this.certificates = data.data
+      axios({
+        method: 'get',
+        url: 'https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates',
+        origin: 'https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates',
+        withCredentials: true,
+      })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+
+      // const res = await fetch('https://d1lsxracz9.execute-api.ap-southeast-1.amazonaws.com/Stage/api/v1/certificates')
+      // // const res = await fetch('http://localhost:3000/certificates')
+      // const data = await res.json()
+      // this.certificates = data.data
     }
   }
 }
